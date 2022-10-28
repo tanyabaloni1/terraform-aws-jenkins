@@ -40,5 +40,35 @@ variable "root_volume_size" {}
 
 variable "vpc_id" {}
 
-variable "ebs_delete_on_termination" {
+#variable "ebs_block_device" {
+#
+#}
+
+variable "ec2_device_names" {
+  default = [
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf"
+  ]
 }
+
+variable "ec2_ebs_volume_count" {
+  default = 3
+}
+
+#variable "ec2_ebs_availability_zone" {
+#  default = "us-east-1a"
+#}
+
+variable "ec2_ebs_volume_type" {
+  default = "gp3"
+}
+
+variable "ec2_ebs_volume_size" {
+  default = [
+    5,
+    5,
+    7
+  ]
+}
+

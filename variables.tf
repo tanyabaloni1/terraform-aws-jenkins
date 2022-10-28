@@ -33,16 +33,18 @@ variable "encrypted" {
 variable "volume_type" {
   default = "gp3"
 }
-variable "root_volume_size" {
-  default = 10
+variable "root_volume_size" {}
+
+variable "ec2_device_names" {
+  type = list(string)
 }
 
-variable "block_device" {
-  type        = list(any)
-  default     = {
-    device_name = "/dev/sdf"
-    volume_type = "gp3"
-    volume_size = 5
-    encrypted   = true
-  }
+variable "ec2_ebs_volume_count" {}
+
+#variable "ec2_ebs_availability_zone" {}
+
+variable "ec2_ebs_volume_size" {
+  type = list(number)
 }
+
+variable "ec2_ebs_volume_type" {}

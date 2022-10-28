@@ -1,16 +1,21 @@
-region               = "ap-south-1"
+region               = "us-east-1"
 profile              = "default"
-key_name             = ""
+key_name             = "tomcat"
 project              = "test-project"
-project_name_prefix  = "test-project"
+project_name_prefix  = "test"
 environment          = "test"
 instance_type        = "t2.micro"
 iam_instance_profile = "ssm-role"
-subnet_id            = ""
+subnet_id            = "subnet-aa2a36e7"
 ebs_optimized        = "false"
 root_volume_size     = "10"
-security_groups      = [""]
-vpc_id               = ""
+security_groups      = ["sg-b0f903a8"]
+vpc_id               = "vpc-4bb72e36"
+ec2_device_names     = ["/dev/sdd","/dev/sde","/dev/sdf"]
+ec2_ebs_volume_count = 3
+#ec2_ebs_availability_zone     = "us-east-1a"
+ec2_ebs_volume_size  = [5,10,15]
+ec2_ebs_volume_type  = "gp3"
 common_tags = {
   "Feature" : "application"
 }

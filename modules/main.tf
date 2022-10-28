@@ -19,15 +19,18 @@ resource "aws_instance" "ec2" {
     volume_size           = var.root_volume_size
     volume_type           = var.volume_type
   }
-  dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
-    content {
-      delete_on_termination = var.ebs_delete_on_termination
-      device_name           = ebs_block_device.value.device_name
-      encrypted             = lookup(ebs_block_device.value, "encrypted", null)
-      iops                  = lookup(ebs_block_device.value, "iops", null)
-      volume_size           = lookup(ebs_block_device.value, "volume_size", null)
-      volume_type           = lookup(ebs_block_device.value, "volume_type", null)
-    }
-  }
+}
+
+resource "aws_ebs_volume" "ebs_volume" {
+  count             = var.ec2_ebs_volume_count
+  availability_zone = "${element(aws_instance.ec2.*.availability_zone, count.index)}"
+  size              = "${element(var.ec2_ebs_volume_size, count.index)}"
+  type              = var.ec2_ebs_volume_type
+}
+
+resource "aws_volume_attachment" "volume_attachement" {
+  count       = var.ec2_ebs_volume_count
+  volume_id   = "${aws_ebs_volume.ebs_volume.*.id[count.index]}"
+  device_name = "${element(var.ec2_device_names, count.index)}"
+  instance_id = "${element(aws_instance.ec2.*.id, count.index)}"
 }

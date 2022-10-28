@@ -7,7 +7,7 @@ provider "aws" {
       tomap({
         "Project"     = var.project,
         "Environment" = var.environment
-      } )
+      })
     )
   }
 }
