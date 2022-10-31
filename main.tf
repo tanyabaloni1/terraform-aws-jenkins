@@ -1,13 +1,18 @@
 data "aws_ami" "amazon-linux-2" {
-  most_recent = true
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm*"]
-  }
+    most_recent = true
+    filter {
+      name   = "owner-alias"
+      values = ["amazon"]
+    }
+    filter {
+      name   = "name"
+      values = ["amzn2-ami-hvm*"]
+    }
+    owners = ["amazon"]
+}
+
+data "template_file" "user_data" {
+    template = file("${path.module}/user_data.sh")
 }
 resource "aws_instance" "ec2" {
     ami                     = data.aws_ami.amazon-linux-2.id
@@ -19,10 +24,11 @@ resource "aws_instance" "ec2" {
     ebs_optimized           = var.ebs_optimized
     disable_api_termination = var.disable_api_termination
     disable_api_stop        = var.disable_api_stop
-    user_data               = file("user_data.sh")
+    user_data_base64        = base64encode(data.template_file.user_data.rendered)
+    source_dest_check       = var.source_dest_check
 
-    volume_tags             = var.tags
-    tags                    = var.tags
+    volume_tags = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-jenkins" }))
+    tags        = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-jenkins" }))
 
     root_block_device {
       delete_on_termination = var.delete_on_termination

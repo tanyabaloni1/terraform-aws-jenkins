@@ -1,10 +1,15 @@
-variable subnet_id {
-    description = "The VPC Subnet ID to launch in"
-    type        = string
+variable "subnet_id" {
+    description = "The VPC Subnet IDs to launch in"
+    type        = list(string)
 }
 
 variable "instance_type" {
     description = "The type of instance to start"
+    type        = string
+}
+
+variable "project_name_prefix" {
+    description = "A string value to describe prefix of all the resources"
     type        = string
 }
 
@@ -34,7 +39,7 @@ variable "security_groups" {
     type        = list(string)
 }
 
-variable "tags" {
+variable "common_tags" {
     description = "A mapping of tags to assign to the resource"
     type        = map(string)
 }
@@ -52,12 +57,12 @@ variable "encrypted" {
 }
 
 variable "volume_type" {
-    type        = string
-    default     = "gp3"
+    type    = string
+    default = "gp3"
 }
 
 variable "root_volume_size" {
-    type        = number
+    type = number
 }
 
 variable "vpc_id" {
@@ -68,7 +73,14 @@ variable "vpc_id" {
 variable "disable_api_stop" {
     description = "If true, enables EC2 Instance Stop Protection."
     type        = bool
-    default     = true
+    default     = false
 }
 
+variable "source_dest_check" {
+    type    = bool
+    default = true
+}
 
+variable "environment" {}
+
+variable "project" {}
