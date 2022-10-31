@@ -13,7 +13,6 @@ security_groups      = ["sg-b0f903a8"]
 vpc_id               = "vpc-4bb72e36"
 ec2_device_names     = ["/dev/sdd","/dev/sde","/dev/sdf"]
 ec2_ebs_volume_count = 3
-#ec2_ebs_availability_zone     = "us-east-1a"
 ec2_ebs_volume_size  = [5,10,15]
 ec2_ebs_volume_type  = "gp3"
 common_tags = {
