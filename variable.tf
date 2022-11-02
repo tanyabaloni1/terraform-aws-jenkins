@@ -81,6 +81,12 @@ variable "source_dest_check" {
     default = true
 }
 
-variable "environment" {}
+variable "environment" {
+    type    = string
+    default = "dev"
+}
 
-variable "project" {}
+variable "project" {
+    type    = string
+    default = "test"
+}
