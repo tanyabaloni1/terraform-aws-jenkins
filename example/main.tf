@@ -1,12 +1,7 @@
-# terraform-aws-jenkins
-
-## Usage
-
-```
 module "ec2-jenkins" {
     source                    = "git::https://github.com/tothenew/terraform-aws-jenkins.git"
-    key_name                  = "key_name"
-    iam_instance_profile      = "test-role"
+    key_name                  = "tothenew"
+    iam_instance_profile      = "tothenew"
     security_groups           = ["sg-999999999999"]
     subnet_id                 = "subnet-999999999999"
     project_name_prefix       = "dev-tothenew"
@@ -15,8 +10,3 @@ module "ec2-jenkins" {
       "Environment" = "dev"
     }
 }
-```
-
-<!--- BEGIN_TF_DOCS --->
-
-<!--- END_TF_DOCS --->
