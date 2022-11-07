@@ -5,9 +5,9 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.head_ref }}
 
       - name: Render terraform docs inside the README.md and push changes back to PR branch
         uses: DNXLabs/terraform-docs@v1.0.0
