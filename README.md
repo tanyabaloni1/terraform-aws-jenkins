@@ -1,7 +1,7 @@
 # terraform-aws-jenkins
 
-[![Lint Status](https://github.com/tothenew/terraform-aws-jenkins/workflows/Lint/badge.svg)](https://github.com/tothenew/terraform-aws-template/actions)
-[![LICENSE](https://img.shields.io/github/license/tothenew/terraform-aws-jenkins)](https://github.com/tothenew/terraform-aws-template/blob/master/LICENSE)
+[![Lint Status](https://github.com/tothenew/terraform-aws-jenkins/workflows/Lint/badge.svg)](https://github.com/tothenew/terraform-aws-jenkins/actions)
+[![LICENSE](https://img.shields.io/github/license/tothenew/terraform-aws-jenkins)](https://github.com/tothenew/terraform-aws-jenkins/blob/master/LICENSE)
 
 This is a jenkins to use for baseline. The default actions will provide updates for section bitween Requirements and Outputs.
 
