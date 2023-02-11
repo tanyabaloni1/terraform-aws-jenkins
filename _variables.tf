@@ -1,6 +1,6 @@
-variable "subnet_id" {
-  description = "The VPC Subnet IDs to launch in"
-  type        = string
+variable "subnet_ids" {
+  type        = list(string)
+  description = "Subnet Ids where server will be launched"
 }
 
 variable "instance_type" {
@@ -17,6 +17,11 @@ variable "project_name_prefix" {
 
 variable "iam_instance_profile" {
   description = "IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "A string value for VPC ID"
   type        = string
 }
 
@@ -37,14 +42,15 @@ variable "ebs_optimized" {
   default     = true
 }
 
-variable "security_groups" {
-  description = "A string value for Security Group ID"
+variable "security_group_ids" {
   type        = list(string)
+  description = "A string value for Security Group ID"
+  default     = []
 }
 
 variable "common_tags" {
-  description = "A mapping of tags to assign to the resource"
   type        = map(string)
+  description = "A mapping of tags to assign to the resource"
 }
 
 variable "delete_on_termination" {
