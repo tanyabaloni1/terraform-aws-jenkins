@@ -12,6 +12,22 @@ The following content needed to be created and managed:
  - Resource created and managed by this module
  - Example Usages
 
+ # Usages
+```
+module "ec2-jenkins" {
+  source               = "git::https://github.com/tothenew/terraform-aws-jenkins.git"
+  key_name             = "tothenew"
+  iam_instance_profile = "tothenew"
+  security_groups      = ["sg-999999999999"]
+  subnet_id            = "subnet-999999999999"
+  project_name_prefix  = "dev-tothenew"
+  common_tags = {
+    "Project"     = "ToTheNew",
+    "Environment" = "dev"
+  }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
