@@ -1,7 +1,3 @@
-data "aws_caller_identity" "current" {}
-
-data "aws_region" "current" {}
-
 data "aws_ami" "amazon-linux-2" {
   most_recent = true
   filter {
@@ -63,6 +59,13 @@ resource "aws_security_group" "jenkins_sg" {
   tags        = merge(var.common_tags, tomap({ "Name" : "${var.project_name_prefix}-jenkins-sg" }))
   description = "Jenkins security group"
   
+  ingress {
+    description = "Allow SSM into the server"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["${data.aws_vpc.jenkins_vpc.cidr_block}"]
+  }
   egress {
     description = "Allow traffic to internet for Package installation"
     from_port   = 443
