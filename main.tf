@@ -94,7 +94,6 @@ resource "aws_instance" "ec2" {
   instance_type           = var.instance_type
   subnet_id               = var.subnet_ids[0]
   vpc_security_group_ids  = length(var.security_group_ids) == 0 ? [aws_security_group.jenkins_sg.id] : concat([aws_security_group.jenkins_sg.id], var.security_group_ids)
-  key_name                = var.key_name
   iam_instance_profile    = var.iam_instance_profile == "" ? aws_iam_instance_profile.jenkins-profile[0].name : var.iam_instance_profile
   ebs_optimized           = var.ebs_optimized
   disable_api_termination = var.disable_api_termination
