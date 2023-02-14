@@ -12,7 +12,7 @@ variable "instance_type" {
 variable "project_name_prefix" {
   description = "A string value to describe prefix of all the resources"
   type        = string
-  default     = "dev-tothenew"
+  default     = "dev"
 }
 
 variable "iam_instance_profile" {
@@ -51,6 +51,9 @@ variable "security_group_ids" {
 variable "common_tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resource"
+  default     = {
+    "Created By" = "Terraform"
+    }
 }
 
 variable "delete_on_termination" {
