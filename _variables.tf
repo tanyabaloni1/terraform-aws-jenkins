@@ -18,6 +18,7 @@ variable "project_name_prefix" {
 variable "iam_instance_profile" {
   description = "IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile"
   type        = string
+  default     = ""
 }
 
 variable "vpc_id" {
