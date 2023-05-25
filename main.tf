@@ -92,7 +92,7 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${data.aws_vpc.jenkins_vpc.cidr_block}"]
   }
   ingress {
     description = "Allow SSM into the server"
