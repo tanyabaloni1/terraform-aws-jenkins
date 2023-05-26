@@ -30,14 +30,16 @@ sudo yum install -y kubectl
 kubectl version --client --output=yaml
 
 sudo amazon-linux-extras install nginx1 -y
- # Configure NGINX
-    sudo bash -c 'echo "server {
+#cloud-config
+runcmd:
+  - echo 'server {
       listen 80;
+      server_name  _;
+    
       location / {
-        return 301 http://localhost:8080;
+          return 301 http://$host:8080$request_uri;
       }
-    }" > /etc/nginx/sites-available/redirect'
-sudo ln -sf /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+  }' > /etc/nginx/conf.d/redirect.conf
 sudo systemctl start nginx
 sudo systemctl enable nginx
 sudo systemctl status nginx
