@@ -33,6 +33,19 @@ sudo amazon-linux-extras install nginx1 -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 sudo systemctl status nginx
+cat <<EOF > /etc/nginx/conf.d/reverse_proxy.conf
+server {
+    listen 8081;
+    server_name _;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+}
+EOF
+systemctl restart nginx
 
 sudo sed -i 's/listen       80;/listen       8080;/g' /etc/nginx/nginx.conf
 echo 'server {
