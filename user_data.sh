@@ -30,34 +30,43 @@ sudo yum install -y kubectl
 kubectl version --client --output=yaml
 
 sudo amazon-linux-extras install nginx1 -y
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo systemctl status nginx
-cat <<EOF > /etc/nginx/conf.d/reverse_proxy.conf
-server {
-    listen 8081;
-    server_name _;
+cat > /etc/nginx/nginx.conf << EOF
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
 
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                      '\$status \$body_bytes_sent "\$http_referer" '
+                      '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen 80;
+        server_name _;
+
+        location / {
+            proxy_pass http://127.0.0.1:8080;
+            proxy_set_header Host \$host;
+            proxy_set_header X-Real-IP \$remote_addr;
+        }
     }
 }
 EOF
 systemctl restart nginx
-
-sudo sed -i 's/listen       80;/listen       8080;/g' /etc/nginx/nginx.conf
-echo 'server {
-    listen 80;
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-    }
-}' | sudo tee -a /etc/nginx/conf.d/redirect.conf > /dev/null
-sudo systemctl stop nginx
-sudo systemctl start nginx
-
+systemctl enable nginx
 nginx -t
 nginx -version
 
